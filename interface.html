@@ -70,8 +70,18 @@
     <br>
     <br>
     <h2>Pending Orders</h2>
-    <label for="command_staff_name"> Staff: </label>
+    <label for="command_staff_name"> Fulfilling Staff: </label>
     <input id="command_staff_name"/>
+    <label for="staff_dept"> Staff Dept: </label>
+    <select name="staff_dept" id="staff_dept">
+    <option value="pharmacy">Pharmacy</option>
+    <option value="lab">Lab</option>
+    <option value="radiology">radiology</option>
+    </select>
+    <br>
+    <br>
+    <label for="command_clinician_name"> Clinician Name: </label>
+    <input id="command_clinician_name"/>
     <br>
     <br>
     <button onclick="completeClaimCommand()">Claim Order</button>
@@ -199,6 +209,7 @@
         
         async function completeClaimCommand(){
             let staff_name = document.getElementById("command_staff_name").value;
+            let staff_dept = document.getElementById("staff_dept").value;
             if(staff_name.trim() == ""){
                 alert("PLEASE fill in staff name! Command not executed");
             } else if(!document.getElementById("Fulfilling_Staff").checked){
@@ -207,6 +218,7 @@
                 let host = "https://project2-backend-zgb6.onrender.com";
                 let formData = new FormData();
                 formData.append("staff_name", staff_name);
+                formData.append("staff_dept", staff_dept)
                 let request = {
                     method: "POST",
                     body: formData
@@ -250,7 +262,7 @@
         }
 
         async function completeCancelCommand(id){
-            let staff_name = document.getElementById("command_staff_name").value;
+            let staff_name = document.getElementById("command_clinician_name").value;
             if(staff_name.trim() == ""){
                 alert("PLEASE fill in staff name! Command not executed");
             } else if(!document.getElementById("Clinician").checked){
